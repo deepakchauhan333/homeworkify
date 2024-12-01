@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+
+.bg-grid-pattern {
+  background-image: radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.03) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
