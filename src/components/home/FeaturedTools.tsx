@@ -1,120 +1,296 @@
-import React from 'react';
-import { ArrowUpRight, Star, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
-const ToolCard = ({ name, description, image, price, rating, isNew }: {
+// Tool Card Component
+interface ToolCardProps {
   name: string;
   description: string;
-  image: string;
-  price: string;
+  category: string;
   rating: number;
-  isNew?: boolean;
-}) => (
-  <div className="group relative bg-black rounded-lg overflow-hidden border border-gray-700 hover:border-pink-500 transition-all duration-300">
-    <div className="aspect-w-16 aspect-h-9 bg-black">
+  image: string;
+  id: string;
+}
+
+const ToolCard: React.FC<ToolCardProps> = ({ name, description, category, rating, image, id }) => (
+  <motion.div
+    whileHover={{ y: -5, transition: { duration: 0.2 } }}
+    className="group bg-gradient-to-r from-black via-blue-900/50 to-black rounded-2xl overflow-hidden shadow-lg shadow-black/20"
+  >
+    {/* Preview Image */}
+    <div className="relative h-[200px] overflow-hidden">
       <img
         src={image}
         alt={name}
-        className="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
       />
-      {isNew && (
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          <div className="absolute bottom-4 left-4 px-3 py-1 bg-pink-600 rounded-full text-xs font-medium text-white shadow-lg">
-            Premium
-          </div>
-        </div>
-      )}
+      <div className="absolute top-4 left-4">
+        <span className="px-3 py-1 bg-black/30 backdrop-blur-md rounded-full text-xs text-white/90">
+          {category}
+        </span>
+      </div>
     </div>
-    
-    <div className="p-4">
-      <div className="flex items-start justify-between mb-2">
-        <h3 className="text-lg font-bold text-white group-hover:text-pink-400 transition-colors">
+
+    {/* Content */}
+    <div className="relative p-6 h-[180px] bg-gradient-to-r from-black/80 via-transparent to-black/80">
+      {/* Title and Description Container - Fixed Height */}
+      <div className="h-[80px]">
+        <h3 className="text-xl text-white font-semibold tracking-tight group-hover:text-blue-400 transition-colors">
           {name}
         </h3>
-        <div className="flex items-center gap-1 text-yellow-400">
-          <Star size={16} fill="currentColor" />
-          <span className="text-sm font-medium">{rating.toFixed(1)}</span>
-        </div>
+        <p className="text-white/80 text-sm leading-relaxed mt-2 line-clamp-2">
+          {description}
+        </p>
       </div>
-      
-      <p className="text-gray-300 text-sm line-clamp-2 mb-3 group-hover:text-gray-200">
-        {description}
-      </p>
-      
-      <div className="flex items-center justify-between mt-3">
-        <span className="text-pink-400 font-semibold">{price}</span>
-        <button className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-pink-500 to-red-600 rounded-lg text-white font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+
+      {/* Footer - Absolute Positioning */}
+      <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+        {/* Rating */}
+        <div className="flex items-center gap-1.5">
+          <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          <span className="text-white/90 font-medium text-sm">{rating}</span>
+        </div>
+
+        {/* Explore Tool Button */}
+        <motion.button
+          whileHover={{ scale: 1.05, x: 3 }}
+          whileTap={{ scale: 0.95 }}
+          className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400
+            text-white text-sm font-medium flex items-center gap-2 transition-all duration-300
+            shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30"
+        >
           Explore Tool
-          <ArrowUpRight size={16} />
-        </button>
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </motion.button>
       </div>
     </div>
-  </div>
+  </motion.div>
 );
 
-const FeaturedTools = () => {
+const FeaturedTools: React.FC = () => {
+  const [selectedTool, setSelectedTool] = useState<number | null>(null);
+
   const tools = [
+    // First Row
     {
-      name: "MindForge AI",
-      description: "Advanced neural network for creative problem-solving and innovation acceleration",
-      image: "https://images.unsplash.com/photo-1676299081847-824916de030a?auto=format&fit=crop&w=800",
-      price: "$29.99",
+      id: "video-generator",
+      name: "Video Generator",
+      description: "Create AI videos from just text with professional presenters",
+      category: "Video",
+      rating: 4.8,
+      image: "/images/video-generator-preview.jpg"
+    },
+    {
+      id: "tools-it",
+      name: "Tools IT",
+      description: "Generate high quality content and AI images with ToolsIT",
+      category: "Content",
       rating: 4.9,
-      isNew: true
+      image: "/images/copywriting-preview.jpg"
     },
     {
-      name: "NeuroPaint Studio",
-      description: "Revolutionary AI art generation with neural style transfer and creative tools",
-      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800",
-      price: "$19.99",
-      rating: 4.8
-    },
-    {
-      name: "CodeSynth AI",
-      description: "AI-powered code generation and optimization for developers",
-      image: "https://images.unsplash.com/photo-1555066931-bf19f8fd1085?auto=format&fit=crop&w=800",
-      price: "$39.99",
+      id: "gooey-ai",
+      name: "Gooey.AI",
+      description: "Developer tools for AI-powered applications",
+      category: "Development",
       rating: 4.7,
-      isNew: true
+      image: "/images/developer-preview.jpg"
     },
     {
-      name: "VisionQuest AI",
-      description: "Advanced computer vision platform for real-time image analysis",
-      image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800",
-      price: "$24.99",
-      rating: 4.6
+      id: "neural-love",
+      name: "Neural.Love",
+      description: "Advanced AI image generation and enhancement",
+      category: "Image",
+      rating: 4.8,
+      image: "/images/neural-preview.jpg"
+    },
+    // Second Row
+    {
+      id: "deepmind-studio",
+      name: "DeepMind Studio",
+      description: "Professional AI video creation suite",
+      category: "Video",
+      rating: 4.9,
+      image: "/images/deepmind-preview.jpg"
     },
     {
-      name: "SoundForge AI",
-      description: "Neural audio processing and music generation platform",
-      image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=800",
-      price: "$34.99",
-      rating: 4.8
+      id: "ai-fusion",
+      name: "AI Fusion",
+      description: "Blend and enhance images with AI",
+      category: "Image",
+      rating: 4.7,
+      image: "/images/aifusion-preview.jpg"
+    },
+    {
+      id: "codecraft-ai",
+      name: "CodeCraft AI",
+      description: "AI-powered development assistant",
+      category: "Development",
+      rating: 4.8,
+      image: "/images/codecraft-preview.jpg"
+    },
+    {
+      id: "pixelmind",
+      name: "PixelMind",
+      description: "Transform your ideas into stunning visuals",
+      category: "Image",
+      rating: 4.6,
+      image: "/images/pixelmind-preview.jpg"
+    },
+    // Third Row (2 cards)
+    {
+      id: "voice-master",
+      name: "Voice Master",
+      description: "Professional AI voice generation",
+      category: "Audio",
+      rating: 4.7,
+      image: "/images/voice-preview.jpg"
+    },
+    {
+      id: "datasense",
+      name: "DataSense",
+      description: "AI-powered data analysis and visualization",
+      category: "Data",
+      rating: 4.8,
+      image: "/images/datasense-preview.jpg"
     }
   ];
 
-  return (
-    <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-12">
-          <div>
-            <h2 className="text-3xl font-bold text-white mb-4 flex items-center gap-2">
-              Featured AI Tools
-              <Sparkles className="text-blue-400" size={24} />
-            </h2>
-            <p className="text-gray-400">
-              Discover cutting-edge AI tools to enhance your workflow
-            </p>
-          </div>
-          <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white font-medium hover:shadow-lg hover:shadow-blue-500/20 transition-shadow">
-            View All Tools
-          </button>
-        </div>
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tools.map((tool, index) => (
-            <ToolCard key={index} {...tool} />
-          ))}
-        </div>
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
+  const handleToolClick = (toolId: string) => {
+    setSelectedTool(parseInt(toolId));
+    // Here you can add logic to show the tool interface
+    console.log('Selected tool:', toolId);
+  };
+
+  return (
+    <section className="bg-[#0A0C10] py-16">
+      <div className="max-w-[1400px] mx-auto px-4">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-4xl font-bold text-white mb-12"
+        >
+          Featured Tools
+        </motion.h2>
+
+        {/* Tools Grid */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid grid-rows-[auto_auto_auto] gap-y-5"
+        >
+          {/* First Row - 4 cards */}
+          <div className="grid grid-cols-4 gap-5">
+            {tools.slice(0, 4).map((tool, index) => (
+              <Link to={`/tool/${tool.id}`} key={tool.id}>
+                <motion.div
+                  variants={item}
+                  className="w-full"
+                >
+                  <div
+                    className="bg-gray-800 rounded-lg p-6 cursor-pointer transform transition-transform hover:scale-105"
+                    onClick={() => handleToolClick(tool.id)}
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="px-3 py-1 bg-gray-700 rounded-full text-sm">
+                        {tool.category}
+                      </span>
+                      <div className="flex items-center">
+                        <span className="text-yellow-500 mr-1">★</span>
+                        <span className="text-sm">{tool.rating}</span>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2">{tool.name}</h3>
+                    <p className="text-gray-400 text-sm">{tool.description}</p>
+                    <ToolCard {...tool} />
+                  </div>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Second Row - 4 cards */}
+          <div className="grid grid-cols-4 gap-5">
+            {tools.slice(4, 8).map((tool, index) => (
+              <Link to={`/tool/${tool.id}`} key={tool.id}>
+                <motion.div
+                  variants={item}
+                  className="w-full"
+                >
+                  <div
+                    className="bg-gray-800 rounded-lg p-6 cursor-pointer transform transition-transform hover:scale-105"
+                    onClick={() => handleToolClick(tool.id)}
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="px-3 py-1 bg-gray-700 rounded-full text-sm">
+                        {tool.category}
+                      </span>
+                      <div className="flex items-center">
+                        <span className="text-yellow-500 mr-1">★</span>
+                        <span className="text-sm">{tool.rating}</span>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2">{tool.name}</h3>
+                    <p className="text-gray-400 text-sm">{tool.description}</p>
+                    <ToolCard {...tool} />
+                  </div>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Third Row - 2 cards centered */}
+          <div className="grid grid-cols-4 gap-5">
+            <div className="col-span-2 col-start-2">
+              {tools.slice(8, 10).map((tool, index) => (
+                <Link to={`/tool/${tool.id}`} key={tool.id}>
+                  <motion.div
+                    variants={item}
+                    className="w-full mb-5 last:mb-0"
+                  >
+                    <div
+                      className="bg-gray-800 rounded-lg p-6 cursor-pointer transform transition-transform hover:scale-105"
+                      onClick={() => handleToolClick(tool.id)}
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="px-3 py-1 bg-gray-700 rounded-full text-sm">
+                          {tool.category}
+                        </span>
+                        <div className="flex items-center">
+                          <span className="text-yellow-500 mr-1">★</span>
+                          <span className="text-sm">{tool.rating}</span>
+                        </div>
+                      </div>
+                      <h3 className="text-xl font-semibold mb-2">{tool.name}</h3>
+                      <p className="text-gray-400 text-sm">{tool.description}</p>
+                      <ToolCard {...tool} />
+                    </div>
+                  </motion.div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

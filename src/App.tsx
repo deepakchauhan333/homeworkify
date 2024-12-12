@@ -1,23 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-import HeroSection from './components/home/HeroSection';
-import PopularTools from './components/home/PopularTools';
-import Categories from './components/home/Categories';
-import Newsletter from './components/home/Newsletter';
+import AppRoutes from './routes';
 
 function App() {
   return (
-    <div className="min-h-screen bg-black text-white">
-      <Header />
-      <main>
-        <HeroSection />
-        <PopularTools />
-        <Categories />
-        <Newsletter />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="min-h-screen bg-black text-white">
+        <Header />
+        <main>
+          <AppRoutes />
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

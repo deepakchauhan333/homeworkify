@@ -3,56 +3,56 @@ import { Github, Twitter, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2">
+    <footer className="bg-gradient-to-r from-black via-blue-900 to-black text-white py-8">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-between items-start">
+          <div className="mb-4 md:mb-0">
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold">AI</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">AIHub.Tools</span>
+              <span className="text-xl font-bold text-white">AIHub.Tools</span>
             </div>
-            <p className="text-gray-600 mb-4">
+            <p className="text-white/80 max-w-md mb-4">
               Your central hub for discovering AI tools, blogs, and GPT-related resources.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-gray-600">
+              <a href="#" className="text-white/80 hover:text-blue-400 transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-600">
+              <a href="#" className="text-white/80 hover:text-blue-400 transition-colors">
                 <Github size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-600">
+              <a href="#" className="text-white/80 hover:text-blue-400 transition-colors">
                 <Linkedin size={20} />
               </a>
             </div>
           </div>
 
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 hover:text-blue-600">About Us</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-blue-600">Contact</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-blue-600">Submit Tool</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-blue-600">Categories</a></li>
-            </ul>
-          </div>
+          <div className="flex space-x-8 md:space-x-16 mt-8 md:mt-0">
+            <div>
+              <h3 className="text-lg font-bold mb-2">Quick Links</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-white/80 hover:text-blue-400 transition-colors">About Us</a></li>
+                <li><a href="#" className="text-white/80 hover:text-blue-400 transition-colors">Contact</a></li>
+                <li><a href="#" className="text-white/80 hover:text-blue-400 transition-colors">Submit Tool</a></li>
+                <li><a href="#" className="text-white/80 hover:text-blue-400 transition-colors">Categories</a></li>
+              </ul>
+            </div>
 
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 hover:text-blue-600">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-blue-600">Terms of Service</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-blue-600">Cookie Policy</a></li>
-            </ul>
+            <div>
+              <h3 className="text-lg font-bold mb-2">Legal</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-white/80 hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="text-white/80 hover:text-blue-400 transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="text-white/80 hover:text-blue-400 transition-colors">Cookie Policy</a></li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-200 mt-12 pt-8 text-center">
-          <p className="text-gray-600">
-            © 2024 AIHub.Tools. All rights reserved.
-          </p>
+        <div className="mt-8 pt-8 text-center text-white/60 border-t border-white/10">
+          <p>&copy; 2024 AIHub.Tools. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
