@@ -9,23 +9,25 @@ const ToolCard = ({ name, description, image, price, rating, isNew }: {
   rating: number;
   isNew?: boolean;
 }) => (
-  <div className="group relative bg-gradient-to-br from-gray-900 to-gray-950 rounded-2xl overflow-hidden border border-gray-800 hover:border-blue-500 transition-all duration-300">
-    <div className="aspect-w-16 aspect-h-9 bg-gradient-to-br from-gray-800 to-gray-900">
+  <div className="group relative bg-black rounded-lg overflow-hidden border border-gray-700 hover:border-pink-500 transition-all duration-300">
+    <div className="aspect-w-16 aspect-h-9 bg-black">
       <img
         src={image}
         alt={name}
         className="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-opacity"
       />
       {isNew && (
-        <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-xs font-medium text-white shadow-lg">
-          New
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <div className="absolute bottom-4 left-4 px-3 py-1 bg-pink-600 rounded-full text-xs font-medium text-white shadow-lg">
+            Premium
+          </div>
         </div>
       )}
     </div>
     
-    <div className="p-6">
-      <div className="flex items-start justify-between mb-3">
-        <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+    <div className="p-4">
+      <div className="flex items-start justify-between mb-2">
+        <h3 className="text-lg font-bold text-white group-hover:text-pink-400 transition-colors">
           {name}
         </h3>
         <div className="flex items-center gap-1 text-yellow-400">
@@ -34,13 +36,13 @@ const ToolCard = ({ name, description, image, price, rating, isNew }: {
         </div>
       </div>
       
-      <p className="text-gray-400 text-sm line-clamp-2 mb-4 group-hover:text-gray-300">
+      <p className="text-gray-300 text-sm line-clamp-2 mb-3 group-hover:text-gray-200">
         {description}
       </p>
       
-      <div className="flex items-center justify-between mt-4">
-        <span className="text-blue-400 font-semibold">{price}</span>
-        <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+      <div className="flex items-center justify-between mt-3">
+        <span className="text-pink-400 font-semibold">{price}</span>
+        <button className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-pink-500 to-red-600 rounded-lg text-white font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
           Explore Tool
           <ArrowUpRight size={16} />
         </button>
